@@ -1,3 +1,39 @@
+const button = document.getElementById('submit');
+const quiz = document.getElementById('quiz_container')
+const questionContainer = document.getElementById('question');
+const answers = document.getElementById("answers")
+const quizDiv = document.getElementById("quiz-question")
+
+button.addEventListener("click", () => {
+  const answer = getSelected();
+  if (answer) {
+    if (answer === quizQuestions[currentQuestion].correct) score++;
+    currentQuestion++;
+    if (currentQuestion < quizQuestions.length) buildQuiz();
+    else {
+     button.style.visibility = "hidden";
+     questionContainer.style.visibility = "hidden";
+     answers.style.visibility = "hidden";
+     quizDiv.style.visibility = "hidden";
+     button.style.height = "0px";
+     questionContainer.style.height = "0px";
+     answers.style.height = "0px";
+     quizDiv.style.height = "0px";
+
+        //history.go(0) --> method to reload the page
+      if (score > 3) {
+        quiz.innerHTML += `<h2>Congratulations you won!</h2>`
+      } else {
+        quiz.innerHTML += `<h2>You lost, try again!</h2>`
+      }
+      quiz.innerHTML += `
+            <h2>Your score is ${score} out of ${quizQuestions.length}</h2>
+            <button onclick="history.go(0)">Play Again</button>
+        ` 
+    }
+  }
+});
+
 //Questions array
 const quizQuestions = [
     {
@@ -43,12 +79,12 @@ const quizQuestions = [
   ];
 
 //references
-const questionContainer = document.getElementById('question');
+
 const a_text = document.getElementById("a_text");
 const b_text = document.getElementById("b_text");
 const c_text = document.getElementById("c_text");
-const d_text = document.getElemeentById("d_text")
-const button = document.getElementById('submit');
+const d_text = document.getElementById("d_text");
+
 const answerContainer = document.querySelectorAll('.answer')
 
 let currentQuestion = 0;
@@ -56,11 +92,13 @@ let score = 0;
 
 //function to clear previously selected answers
 const deselectAnswers = () => {
+
     answerContainer.forEach((answer) => (answer.checked = false));
+
   };
 
   //return selected answers in quiz
-  const getSelected = () => {
+  function getSelected () {
     let answer;
     answerContainer.forEach((answerContainer) => {
       if (answerContainer.checked) answer = answerContainer.id;
@@ -69,7 +107,7 @@ const deselectAnswers = () => {
   };
 
   //loads first quiz question when invoked
-  const buildQuiz = () => {
+function buildQuiz () {
     deselectAnswers();
     const currentQuizQuestions = quizQuestions[currentQuestion];
     questionContainer.innerText = currentQuizQuestions.question;
@@ -81,18 +119,16 @@ const deselectAnswers = () => {
   
   buildQuiz();
 
-  button.addEventListener("click", () => {
-    const answer = getSelected();
-    if (answer) {
-      if (answer === quizQuestions[currentQuestion].correct) score++;
-      currentQuestion++;
-      if (currentQuestion < quizQuestions.length) buildQuiz();
-      else {
-        //history.go(0) --> method to reload the page
-        quiz.innerHTML = `
-              <h2>Your score is ${score} out of ${quizQuestions.length}</h2>
-              <button onclick="history.go(0)">Play Again</button>
-          ` 
-      }
-    }
-  });
+
+
+
+
+
+
+
+
+
+
+
+
+
